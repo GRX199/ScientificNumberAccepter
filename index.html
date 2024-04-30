@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scientific Number Accepter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Dark theme styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: #ddd;
+      animation: background-gradient 10s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #eee;
+      animation: text-shadow 2s ease-in-out infinite;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #333;
+      color: #ddd;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #6c7;
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #6c7;
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      margin-left: 10px;
+    }
+
+    button:hover {
+      background-color: #8d9;
+      transform: scale(1.1);
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      opacity: 0;
+      animation: fade-in 0.5s ease-in-out forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .valid {
+      color: #6c7;
+    }
+
+    .invalid {
+      color: #c66;
+    }
+
+    .result-icon {
+      margin-right: 10px;
+      font-size: 24px;
+    }
+
+    @keyframes background-gradient {
+      0% {
+        background-color: #222;
+      }
+      50% {
+        background-color: #282828;
+      }
+      100% {
+        background-color: #222;
+      }
+    }
+
+    @keyframes text-shadow {
+      0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      }
+      50% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      }
+      100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .footer-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      color: #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Media Queries */
+    @media (max-width: 480px) {
+      .input-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      input[type="text"] {
+        margin-bottom: 10px;
+      }
+
+      button {
+        margin-left: 0;
+      }
+    }
+
+    /* Responsive Typography */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1><i class="fas fa-calculator"></i> Scientific Number Validator</h1>
+  <div class="input-container">
+    <input type="text" id="numberInput" placeholder="e.g. 1.23e+4" onkeydown="handleEnterKey(event)">
+    <button onclick="validateNumber()"><i class="fas fa-check"></i> Validate</button>
+  </div>
+  <p id="result">
+    <span class="result-icon"></span>
+    <span class="result-text"></span>
+  </p>
+
+  <div class="footer-container">
+    <footer>Created by Gilang R. Wijaya [221011060043]</footer>
+  </div>
+
+  <script>
+    function validateNumber() {
+      const input = document.getElementById("numberInput").value;
+      const pattern = /^[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?$/;
+      const resultText = document.querySelector("#result .result-text");
+      const resultIcon = document.querySelector("#result .result-icon");
+
+      if (pattern.test(input)) {
+        resultText.innerHTML = `${input} is a valid scientific number.`;
+        resultText.classList.add("valid");
+        resultText.classList.remove("invalid");
+        resultIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        resultIcon.classList.add("valid");
+        resultIcon.classList.remove("invalid");
+      } else {
+        resultText.innerHTML = `${input} is not a valid scientific number.`;
+        resultText.classList.add("invalid");
+        resultText.classList.remove("valid");
+        resultIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+        resultIcon.classList.add("invalid");
+        resultIcon.classList.remove("valid");
+      }
+    }
+
+    function handleEnterKey(event) {
+      if (event.key === "Enter") {
+        validateNumber();
+      }
+    }
+  </script>
+</body>
+</html>
